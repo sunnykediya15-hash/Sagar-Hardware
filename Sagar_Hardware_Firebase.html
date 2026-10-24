@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#123b32">
+<title>Sagar Hardware Management</title>
+<style>
+:root{--green:#123b32;--green2:#1d6652;--mint:#e7f4ee;--bg:#f4f7f5;--ink:#182a25;--muted:#718078;--line:#e1e9e4;--orange:#f4a340;--white:#fff}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans Devanagari",sans-serif}
+header{background:linear-gradient(130deg,var(--green),#236b53);color:white;padding:20px 18px 24px;border-radius:0 0 24px 24px}
+.top{display:flex;align-items:center;gap:12px}.logo{width:46px;height:46px;border-radius:14px;background:#ffffff1f;display:grid;place-items:center;font-size:24px;border:1px solid #ffffff45}
+.brand{font-size:18px;font-weight:800;letter-spacing:.1px}.sub{font-size:12px;opacity:.82;margin-top:3px}.pill{margin-left:auto;border:1px solid #ffffff50;border-radius:99px;padding:6px 9px;font-size:11px}
+.greeting{margin-top:22px;font-size:13px;opacity:.85}.headline{font-size:23px;font-weight:800;margin-top:3px}.address{font-size:12px;opacity:.8;margin-top:5px}
+main{max-width:980px;margin:auto;padding:16px 14px 94px}.section-head{display:flex;align-items:center;justify-content:space-between;margin:16px 2px 12px}.section-head h2{font-size:17px;margin:0}.date{font-size:11px;color:var(--muted);background:white;border:1px solid var(--line);padding:6px 9px;border-radius:9px}
+.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.stat{background:white;border:1px solid var(--line);border-radius:16px;padding:14px;min-height:112px}.stat .icon{width:34px;height:34px;border-radius:11px;display:grid;place-items:center;background:var(--mint);font-size:17px}.stat .label{font-size:12px;color:var(--muted);margin-top:10px}.stat .value{font-size:22px;font-weight:800;margin-top:2px}.stat .note{font-size:10px;color:var(--muted);margin-top:3px}
+.quick{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.quick button{border:1px solid var(--line);background:white;border-radius:14px;padding:13px 4px;color:var(--ink);font:inherit;font-size:11px;display:grid;justify-items:center;gap:7px}.quick span{font-size:21px}
+.panel{background:white;border:1px solid var(--line);border-radius:16px;padding:15px;margin-top:14px}.panel-title{font-weight:750;font-size:14px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center}.small-btn{border:0;background:var(--mint);color:var(--green);padding:8px 11px;border-radius:10px;font-weight:700;font-size:12px}
+.activity{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid #eef2ef}.activity:last-child{border-bottom:0}.bubble{width:36px;height:36px;border-radius:12px;background:#f0f4f1;display:grid;place-items:center}.activity .name{font-size:12px;font-weight:700}.activity .desc{font-size:11px;color:var(--muted);margin-top:3px}.activity .amount{margin-left:auto;font-size:12px;font-weight:800;white-space:nowrap}
+.staff{display:flex;gap:9px;flex-wrap:wrap}.person{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:12px;padding:9px 11px;font-size:12px}.avatar{width:28px;height:28px;border-radius:50%;background:var(--mint);color:var(--green);font-weight:800;display:grid;place-items:center}
+nav{position:fixed;bottom:0;left:0;right:0;background:#ffffffed;backdrop-filter:blur(12px);border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:8px 3px calc(8px + env(safe-area-inset-bottom));z-index:10}
+nav button{background:none;border:0;color:#7a8881;font:inherit;font-size:10px;display:grid;justify-items:center;gap:4px;padding:4px 7px;min-width:53px}nav button span{font-size:19px}nav button.active{color:var(--green);font-weight:800}
+.view{display:none}.view.active{display:block}.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}.toolbar input,.toolbar select,.field input,.field select,.field textarea{min-width:0;width:100%;border:1px solid #dce6df;background:white;border-radius:10px;padding:11px;font:inherit;font-size:13px}.toolbar input{flex:1;min-width:140px}.primary{border:0;background:var(--green);color:white;border-radius:11px;padding:11px 14px;font:inherit;font-size:12px;font-weight:750}.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;font-size:12px;min-width:470px}th,td{text-align:left;padding:11px 8px;border-bottom:1px solid #edf1ee}th{color:var(--muted);font-weight:650;background:#f9fbf9}.tag{font-size:10px;background:var(--mint);color:var(--green);padding:5px 7px;border-radius:99px}.empty{padding:28px 10px;text-align:center;color:var(--muted);font-size:13px}
+.modal{display:none;position:fixed;inset:0;background:#10231dcc;z-index:20;padding:18px;align-items:center;justify-content:center}.modal.show{display:flex}.dialog{background:white;border-radius:18px;padding:18px;width:min(440px,100%);max-height:90vh;overflow:auto}.dialog h3{margin:0 0 14px}.field{margin:11px 0}.field label{font-size:12px;display:block;margin-bottom:6px;color:var(--muted)}.dialog-actions{display:flex;gap:8px;margin-top:16px}.dialog-actions button{flex:1}.secondary{background:#eef3ef;color:var(--ink);border:0;border-radius:11px;padding:11px;font-weight:700}
+.notice{font-size:11px;color:#6e5a31;background:#fff5df;border:1px solid #f2dfb5;padding:11px;border-radius:12px;line-height:1.55;margin-top:14px}
+
+.auth-screen{position:fixed;inset:0;z-index:100;background:#f4f7f5;display:flex;align-items:center;justify-content:center;padding:20px}
+.auth-card{width:min(420px,100%);background:#fff;border:1px solid var(--line);border-radius:20px;padding:22px;box-shadow:0 12px 40px #123b3214}
+.auth-card h2{margin:0 0 6px;font-size:22px}.auth-card p{font-size:13px;color:var(--muted);line-height:1.5}
+.auth-card input{width:100%;border:1px solid #dce6df;border-radius:10px;padding:12px;margin:7px 0;font:inherit;font-size:14px}
+.auth-card button{width:100%;margin-top:10px}.auth-error{color:#a72f26;font-size:12px;white-space:pre-wrap;margin-top:10px}
+#appRoot[hidden],.auth-screen[hidden]{display:none!important}
+
+@media(min-width:680px){header{padding:24px calc((100% - 940px)/2) 28px}.stats{grid-template-columns:repeat(4,minmax(0,1fr))}.stat{min-height:126px}.layout{display:grid;grid-template-columns:1.15fr .85fr;gap:14px}.quick button{font-size:12px}main{padding-top:20px}}
+</style>
+</head>
+<body>
+<div class="auth-screen" id="authScreen">
+ <div class="auth-card">
+  <div style="font-size:30px">🏪</div>
+  <h2>Sagar Hardware</h2>
+  <p>दुकान का डिजिटल हिसाब खोलने के लिए Admin/Staff ईमेल और पासवर्ड से लॉगिन करें।</p>
+  <form id="loginForm">
+   <input id="loginEmail" type="email" autocomplete="username" placeholder="ईमेल" required>
+   <input id="loginPassword" type="password" autocomplete="current-password" placeholder="पासवर्ड" required>
+   <button class="primary" type="submit">लॉगिन करें</button>
+  </form>
+  <div class="auth-error" id="authError"></div>
+  <p>यूज़र Firebase Authentication में Admin द्वारा बनाया जाना चाहिए।</p>
+ </div>
+</div>
+<div id="appRoot" hidden>
+<header>
+ <div class="top"><div class="logo">🏪</div><div><div class="brand">Sagar Hardware</div><div class="sub">Management • दुकान का डिजिटल हिसाब</div></div><button class="pill" id="logoutBtn" style="background:transparent;color:white;cursor:pointer">लॉगआउट</button></div>
+ <div class="greeting">नमस्ते, Admin 👋</div><div class="headline">आपकी दुकान, एक ही जगह</div><div class="address">📍 Haat Road, Asarganj</div>
+</header>
+<main>
+ <section class="view active" id="dashboard">
+  <div class="section-head"><h2>आज का डैशबोर्ड</h2><span class="date" id="today"></span></div>
+  <div class="stats">
+   <div class="stat"><div class="icon">₹</div><div class="label">आज की बिक्री</div><div class="value" id="salesStat">₹0</div><div class="note">डेमो डेटा</div></div>
+   <div class="stat"><div class="icon">🧾</div><div class="label">कुल ऑर्डर</div><div class="value" id="ordersStat">0</div><div class="note">दर्ज ऑर्डर</div></div>
+   <div class="stat"><div class="icon">📦</div><div class="label">प्रोडक्ट</div><div class="value" id="productsStat">0</div><div class="note">स्टॉक सूची में</div></div>
+   <div class="stat"><div class="icon">⏳</div><div class="label">कुल बकाया</div><div class="value" id="dueStat">₹0</div><div class="note">ग्राहकों से लेना है</div></div>
+  </div>
+  <div class="section-head"><h2>जल्दी काम करें</h2></div>
+  <div class="quick">
+   <button onclick="openModal('product')"><span>➕</span>नया सामान</button>
+   <button onclick="openModal('order')"><span>🧾</span>नया ऑर्डर</button>
+   <button onclick="showView('customers')"><span>👥</span>ग्राहक</button>
+   <button onclick="showView('reports')"><span>📊</span>रिपोर्ट</button>
+  </div>
+  <div class="layout">
+   <div class="panel"><div class="panel-title">हाल के ऑर्डर <button class="small-btn" onclick="showView('orders')">सभी देखें</button></div><div id="recentOrders"></div></div>
+   <div>
+    <div class="panel"><div class="panel-title">स्टाफ टीम</div><div class="staff"><div class="person"><div class="avatar">S</div>Sunny</div><div class="person"><div class="avatar">S</div>Sagar</div><div class="person"><div class="avatar">B</div>Bhola</div></div></div>
+    <div class="panel"><div class="panel-title">ध्यान दें</div><div class="activity"><div class="bubble">🔐</div><div><div class="name">लॉगिन और लाइव डेटा</div><div class="desc">अगले चरण में सुरक्षित सेटअप होगा</div></div></div><div class="activity"><div class="bubble">📤</div><div><div class="name">रिपोर्ट एक्सपोर्ट</div><div class="desc">Excel CSV और प्रिंट/PDF उपलब्ध</div></div></div></div>
+   </div>
+  </div>
+ </section>
+ <section class="view" id="products"><div class="section-head"><h2>सामान और स्टॉक</h2><button class="primary" onclick="openModal('product')">＋ नया सामान</button></div><div class="toolbar"><input id="productSearch" placeholder="सामान खोजें..." oninput="renderProducts()"><button class="small-btn" onclick="exportProducts()">Excel/CSV ↓</button></div><div class="panel table-wrap"><table><thead><tr><th>सामान</th><th>खरीद रेट</th><th>बिक्री रेट</th><th>स्टॉक</th></tr></thead><tbody id="productRows"></tbody></table></div></section>
+ <section class="view" id="orders"><div class="section-head"><h2>ऑर्डर और बिलिंग</h2><button class="primary" onclick="openModal('order')">＋ नया ऑर्डर</button></div><div class="toolbar"><input id="orderSearch" placeholder="ग्राहक या ऑर्डर खोजें..." oninput="renderOrders()"><button class="small-btn" onclick="exportOrders()">Excel/CSV ↓</button><button class="small-btn" onclick="window.print()">PDF / प्रिंट</button></div><div class="panel table-wrap"><table><thead><tr><th>ऑर्डर</th><th>ग्राहक</th><th>राशि</th><th>भुगतान</th><th>तारीख</th></tr></thead><tbody id="orderRows"></tbody></table></div></section>
+ <section class="view" id="customers"><div class="section-head"><h2>ग्राहक और बकाया</h2><button class="primary" onclick="openModal('customer')">＋ ग्राहक जोड़ें</button></div><div class="toolbar"><input id="customerSearch" placeholder="ग्राहक खोजें..." oninput="renderCustomers()"><button class="small-btn" onclick="exportCustomers()">Excel/CSV ↓</button></div><div class="panel table-wrap"><table><thead><tr><th>ग्राहक</th><th>मोबाइल</th><th>बकाया</th></tr></thead><tbody id="customerRows"></tbody></table></div></section>
+ <section class="view" id="reports"><div class="section-head"><h2>रिपोर्ट और हिसाब</h2></div><div class="stats"><div class="stat"><div class="icon">₹</div><div class="label">कुल बिक्री</div><div class="value" id="reportSales">₹0</div></div><div class="stat"><div class="icon">🧾</div><div class="label">ऑर्डर संख्या</div><div class="value" id="reportOrders">0</div></div></div><div class="panel"><div class="panel-title">डेटा डाउनलोड करें</div><p style="font-size:12px;color:var(--muted)">यह डेटा Firebase में साझा होता है। बैकअप/एक्सपोर्ट के लिए CSV डाउनलोड करें।</p><div class="toolbar"><button class="primary" onclick="exportProducts()">प्रोडक्ट Excel/CSV</button><button class="primary" onclick="exportOrders()">ऑर्डर Excel/CSV</button><button class="primary" onclick="window.print()">PDF / प्रिंट</button></div></div><div class="notice">महत्वपूर्ण: यह संस्करण Firebase Authentication और Firestore का उपयोग करता है। इसे इस्तेमाल करने से पहले Firestore Rules में केवल लॉगिन किए हुए उपयोगकर्ताओं को अनुमति दें और हर स्टाफ यूज़र Firebase Authentication में बनाएँ।</div></section>
+</main>
+<nav>
+ <button class="active" data-view="dashboard" onclick="showView('dashboard',this)"><span>⌂</span>होम</button>
+ <button data-view="products" onclick="showView('products',this)"><span>▦</span>स्टॉक</button>
+ <button data-view="orders" onclick="showView('orders',this)"><span>🧾</span>ऑर्डर</button>
+ <button data-view="customers" onclick="showView('customers',this)"><span>♙</span>ग्राहक</button>
+ <button data-view="reports" onclick="showView('reports',this)"><span>▤</span>रिपोर्ट</button>
+</nav>
+<div class="modal" id="modal"><div class="dialog"><h3 id="modalTitle">नया रिकॉर्ड</h3><form id="modalForm"></form></div></div>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+const $=id=>document.getElementById(id);
+const firebaseConfig = {
+  apiKey: "AIzaSyA8yA8FrKbBRVoa5iomUCQ-qyWg1odPDNn0jA",
+  authDomain: "sagar-hardware.firebaseapp.com",
+  projectId: "sagar-hardware",
+  storageBucket: "sagar-hardware.firebasestorage.app",
+  messagingSenderId: "36931278507",
+  appId: "1:36931278507:web:6f9acf40e74ba214d2c9ee",
+  measurementId: "G-0DYQKH8P2R"
+};
+firebase.initializeApp(firebaseConfig);
+const auth=firebase.auth();
+const db=firebase.firestore();
+let stopListeners=[];
+function showAuthError(msg){$("authError").textContent=msg||""}
+$("loginForm").addEventListener("submit",async e=>{
+ e.preventDefault();showAuthError("लॉगिन हो रहा है...");
+ try{await auth.signInWithEmailAndPassword($("loginEmail").value.trim(),$("loginPassword").value)}
+ catch(err){showAuthError("लॉगिन नहीं हुआ: "+(err.code||err.message)+"\nईमेल/पासवर्ड जाँचें और Firebase में उस यूज़र को देखें।")}
+});
+$("logoutBtn").addEventListener("click",()=>auth.signOut());
+auth.onAuthStateChanged(user=>{
+ stopListeners.forEach(fn=>fn());stopListeners=[];
+ $("authScreen").hidden=!!user;$("appRoot").hidden=!user;
+ if(user){showAuthError("");startLiveData();}
+});
+function startLiveData(){
+ const configs=[
+  ["products",v=>{products=v;renderProducts();renderStats();}],
+  ["orders",v=>{orders=v;renderOrders();renderStats();}],
+  ["customers",v=>{customers=v;renderCustomers();renderStats();}]
+ ];
+ configs.forEach(([name,apply])=>{
+  const unsub=db.collection(name).onSnapshot(snap=>apply(snap.docs.map(d=>({id:d.id,...d.data()}))),err=>alert("Firebase "+name+" error: "+err.message));
+  stopListeners.push(unsub);
+ });
+}
+
+let products=[],orders=[],customers=[];
+const money=n=>"₹"+Number(n||0).toLocaleString("en-IN",{maximumFractionDigits:2});
+$("today").textContent=new Date().toLocaleDateString("hi-IN",{day:"numeric",month:"short",year:"numeric"});
+function showView(id,btn){document.querySelectorAll(".view").forEach(v=>v.classList.toggle("active",v.id===id));document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("active",b.dataset.view===id));window.scrollTo({top:0,behavior:"smooth"});if(id==="products")renderProducts();if(id==="orders")renderOrders();if(id==="customers")renderCustomers();if(id==="reports")renderStats()}
+function renderProducts(){let q=($("productSearch")?.value||"").toLowerCase();$("productRows").innerHTML=products.filter(p=>p.name.toLowerCase().includes(q)).map(p=>`<tr><td><b>${esc(p.name)}</b></td><td>${money(p.buy)}</td><td>${money(p.sell)}</td><td>${p.qty<5?'<span style="color:#bd5c22;font-weight:800">':''}${p.qty}${p.qty<5?'</span>':''}</td></tr>`).join("")||'<tr><td colspan="4" class="empty">अभी कोई सामान नहीं</td></tr>';$("productsStat").textContent=products.length}
+function renderOrders(){let q=($("orderSearch")?.value||"").toLowerCase();$("orderRows").innerHTML=orders.filter(o=>(o.customer+o.id).toLowerCase().includes(q)).map(o=>`<tr><td><b>${o.id}</b></td><td>${esc(o.customer)}</td><td>${money(o.amount)}</td><td><span class="tag">${esc(o.payment)}</span></td><td>${o.date}</td></tr>`).join("")||'<tr><td colspan="5" class="empty">अभी कोई ऑर्डर नहीं जोड़ा गया</td></tr>';$("recentOrders").innerHTML=orders.slice(-3).reverse().map(o=>`<div class="activity"><div class="bubble">🧾</div><div><div class="name">${esc(o.customer)}</div><div class="desc">${o.id} • ${o.date}</div></div><div class="amount">${money(o.amount)}</div></div>`).join("")||'<div class="empty">नया ऑर्डर जोड़ने पर यहाँ दिखेगा</div>'}
+function renderCustomers(){let q=($("customerSearch")?.value||"").toLowerCase();$("customerRows").innerHTML=customers.filter(c=>(c.name+c.phone).toLowerCase().includes(q)).map(c=>`<tr><td><b>${esc(c.name)}</b></td><td>${esc(c.phone||"—")}</td><td>${money(c.due)}</td></tr>`).join("")||'<tr><td colspan="3" class="empty">अभी कोई ग्राहक नहीं</td></tr>'}
+function renderStats(){let sales=orders.reduce((a,o)=>a+o.amount,0),due=orders.reduce((a,o)=>a+Math.max(0,o.amount-(o.paid||0)),0);$("salesStat").textContent=money(sales);$("ordersStat").textContent=orders.length;$("dueStat").textContent=money(due);$("reportSales").textContent=money(sales);$("reportOrders").textContent=orders.length;renderOrders()}
+function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function openModal(type){const f=$("modalForm");let fields="",title="";
+if(type==="product"){title="नया सामान जोड़ें";fields='<div class="field"><label>सामान का नाम *</label><input name="name" required placeholder="जैसे CPVC Pipe"></div><div class="field"><label>खरीद रेट (₹)</label><input name="buy" type="number" min="0" value="0" required></div><div class="field"><label>बिक्री रेट (₹)</label><input name="sell" type="number" min="0" value="0" required></div><div class="field"><label>स्टॉक मात्रा</label><input name="qty" type="number" min="0" value="0" required></div>'}
+if(type==="order"){title="नया ऑर्डर";fields='<div class="field"><label>ग्राहक का नाम *</label><input name="customer" required placeholder="ग्राहक का नाम"></div><div class="field"><label>ऑर्डर राशि (₹) *</label><input name="amount" type="number" min="0" required placeholder="0"></div><div class="field"><label>भुगतान स्थिति</label><select name="payment"><option>बाकी</option><option>आंशिक भुगतान</option><option>पूरा भुगतान</option></select></div><div class="field"><label>जमा राशि (₹)</label><input name="paid" type="number" min="0" value="0"></div>'}
+if(type==="customer"){title="नया ग्राहक जोड़ें";fields='<div class="field"><label>ग्राहक का नाम *</label><input name="name" required></div><div class="field"><label>मोबाइल नंबर</label><input name="phone" inputmode="numeric"></div><div class="field"><label>पहले का बकाया (₹)</label><input name="due" type="number" min="0" value="0"></div>'}
+$("modalTitle").textContent=title;f.innerHTML=fields+'<div class="dialog-actions"><button type="button" class="secondary" onclick="closeModal()">रद्द करें</button><button class="primary" type="submit">सेव करें</button></div>';f.onsubmit=async e=>{e.preventDefault();let d=Object.fromEntries(new FormData(f));try{
+ if(type==="product") await db.collection("products").add({name:d.name,buy:+d.buy,sell:+d.sell,qty:+d.qty,createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+ if(type==="order"){
+  const amount=+d.amount,paid=+d.paid;
+  await db.collection("orders").add({id:"ORD-"+Date.now().toString().slice(-8),customer:d.customer,amount,paid,payment:d.payment,date:new Date().toLocaleDateString("en-IN"),createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+  if(!customers.some(c=>(c.name||"").toLowerCase()===d.customer.toLowerCase())) await db.collection("customers").add({name:d.customer,phone:"",due:Math.max(0,amount-paid),createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+ }
+ if(type==="customer") await db.collection("customers").add({name:d.name,phone:d.phone,due:+d.due,createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+ closeModal();
+ }catch(err){alert("सेव नहीं हुआ: "+err.message+"\nFirestore Rules जाँचें।")}};$("modal").classList.add("show")}
+function closeModal(){$("modal").classList.remove("show")}
+$("modal").addEventListener("click",e=>{if(e.target===$("modal"))closeModal()});
+function csv(filename,rows){let data=rows.map(r=>r.map(v=>'"'+String(v??"").replace(/"/g,'""')+'"').join(",")).join("\r\n");let blob=new Blob(["\ufeff"+data],{type:"text/csv;charset=utf-8;"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download=filename;a.click();URL.revokeObjectURL(url)}
+function exportProducts(){csv("sagar-hardware-products.csv",[["सामान","खरीद रेट","बिक्री रेट","स्टॉक"],...products.map(p=>[p.name,p.buy,p.sell,p.qty])])}
+function exportOrders(){csv("sagar-hardware-orders.csv",[["ऑर्डर","ग्राहक","राशि","जमा","भुगतान","तारीख"],...orders.map(o=>[o.id,o.customer,o.amount,o.paid,o.payment,o.date])])}
+function exportCustomers(){csv("sagar-hardware-customers.csv",[["ग्राहक","मोबाइल","बकाया"],...customers.map(c=>[c.name,c.phone,c.due])])}
+renderProducts();renderOrders();renderCustomers();renderStats();
+</script>
+</div>
+</body></html>
